@@ -1,0 +1,38 @@
+#card{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    border: black solid 1px;
+    border-radius: 10px;
+    margin: 1%;
+}
+span{
+    font-weight: bold;
+}
+#topic{
+    width: 400px;
+    align-items: start;
+}
+i,p{
+    font-weight: lighter;
+    width: fit-content;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+#download{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: 300ms;
+}
+#link:hover{
+    color: red;
+}
+#del{
+    font-size: x-large;
+}
+#del:hover{
+    color: red;
+    cursor: pointer;
+}
