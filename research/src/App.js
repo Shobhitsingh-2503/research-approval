@@ -2,7 +2,8 @@ import { useState } from "react";
 import "./App.css";
 import { ethers } from "ethers";
 import Card from "./components/card/Card";
-import { abi, deployedAddress, JWT, DOMAIN } from "./const.js";
+import { abi, deployedAddress } from "./const.js";
+require("dotenv").config();
 
 function App() {
   const [cnct, setCnct] = useState("CONNECT");
@@ -14,7 +15,7 @@ function App() {
 
   useState(async () => {
     if (window.ethereum) {
-      const provider = new ethers.JsonRpcProvider("HTTP://127.0.0.1:7545");
+      const provider = new ethers.JsonRpcProvider(process.env.PROVIDER_API_KEY);
       const signer = await provider.getSigner();
       const contract = new ethers.Contract(deployedAddress, abi, signer);
       contract.getPapers().then((res) => {
@@ -27,7 +28,7 @@ function App() {
 
   async function connect() {
     if (window.ethereum) {
-      const provider = new ethers.JsonRpcProvider("HTTP://127.0.0.1:7545");
+      const provider = new ethers.JsonRpcProvider(process.env.PROVIDER_API_KEY);
       const signer = await provider.getSigner();
       await signer.getAddress().then((res) => {
         setCnct(res.toString());
@@ -43,7 +44,7 @@ function App() {
     const res = await fetch("https://api.pinata.cloud/pinning/pinFileToIPFS", {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${JWT}`,
+        Authorization: `Bearer ${process.env.JWT}`,
       },
       body: formData,
     });
@@ -51,7 +52,7 @@ function App() {
       setCid(await rslt.IpfsHash);
       console.log(cid);
     });
-    const provider = new ethers.JsonRpcProvider("HTTP://127.0.0.1:7545");
+    const provider = new ethers.JsonRpcProvider(process.env.PROVIDER_API_KEY);
     const signer = await provider.getSigner();
     const contract = new ethers.Contract(deployedAddress, abi, signer);
     await contract

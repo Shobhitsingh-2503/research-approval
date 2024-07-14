@@ -1,9 +1,10 @@
 import { ethers } from 'ethers'
 import React from 'react'
 import '../card/Card.css'
-import { abi, deployedAddress, JWT, DOMAIN } from '../../const'
+import { abi, deployedAddress } from '../../const'
 import { FaFileDownload } from 'react-icons/fa'
 import { MdDeleteForever } from 'react-icons/md'
+require('dotenv').config()
 // Use the JWT key
 
 const Card = ({ topic, auth, cid, index, approval, setList }) => {
@@ -11,12 +12,12 @@ const Card = ({ topic, auth, cid, index, approval, setList }) => {
     const res = await fetch(`https://api.pinata.cloud/pinning/unpin/${cid}`, {
       method: 'DELETE',
       headers: {
-        Authorization: `Bearer ${JWT}`,
+        Authorization: `Bearer ${process.env.JWT}`,
       },
     })
     console.log(res)
     if (window.ethereum) {
-      const provider = new ethers.JsonRpcProvider('HTTP://127.0.0.1:7545')
+      const provider = new ethers.JsonRpcProvider(process.env.PROVIDER_API_KEY)
       const signer = await provider.getSigner()
       const contract = new ethers.Contract(deployedAddress, abi, signer)
       contract
@@ -35,7 +36,7 @@ const Card = ({ topic, auth, cid, index, approval, setList }) => {
   }
   async function approve() {
     if (window.ethereum) {
-      const provider = new ethers.JsonRpcProvider('HTTP://127.0.0.1:7545')
+      const provider = new ethers.JsonRpcProvider(process.env.PROVIDER_API_KEY)
       const signer = await provider.getSigner()
       const contract = new ethers.Contract(deployedAddress, abi, signer)
       await contract
@@ -62,7 +63,7 @@ const Card = ({ topic, auth, cid, index, approval, setList }) => {
       </span>
       <span>{auth}</span>
       <span id="download">
-        <a href={`${DOMAIN}/ipfs/${cid}`} id="link" target="_blank">
+        <a href={`${process.env.DOMAIN}/ipfs/${cid}`} id="link" target="_blank">
           <FaFileDownload />
         </a>
         <p>DOWNLOAD</p>
