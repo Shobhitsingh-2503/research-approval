@@ -1,8 +1,9 @@
 const { ethers } = require("hardhat");
 const { abi } = require("../artifacts/contracts/Research.sol/Research.json");
+require("dotenv").config();
 
 async function main() {
-  const provider = new ethers.JsonRpcProvider("HTTP://127.0.0.1:7545");
+  const provider = new ethers.JsonRpcProvider(process.env.API_KEY);
   const signer = await provider.getSigner();
   const contract = new ethers.Contract(
     "0x5507326d812a755a9A6cB5cA6C29e50736771c1b",
