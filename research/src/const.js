@@ -1,4 +1,4 @@
-export const deployedAddress = "0x3a3aE460a41B5cEa35F78F2cd1329C3015B29c06";
+export const deployedAddress = "0x3e2633b032711aaD38280c7E4a4A41300CE2b5e5";
 export const abi = [
   {
     inputs: [],
